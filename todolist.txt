@@ -1,0 +1,40 @@
+Prepare templates - #DONE
+
+Setup dev environment - #DONE
+
+Create Empty Project - #DONE
+
+Create Main App - #DONE
+
+Create Custome User model - #DONE
+
+Create Sign Up and Sign In - #DONE
+
+Task List - #DONE
+
+Create Task - #DONE
+
+Functional Requirements:
+
+1 Task Management (CRUD):
+
+    Implement the ability to Create, Read, Update, and Delete (CRUD) tasks.
+    Each task should have the following attributes: Title, Description, Due Date, Priority Level (e.g., Low, Medium, High), and Status (e.g., Pending, Completed).
+    Ensure validations such as a due date in the future, priority level restrictions, and proper status updates.
+
+2 Users Management (CRUD):
+
+    Implement CRUD operations for users.
+    A user should have a unique Username, Email, and Password.
+    Ensure that each user can manage their own tasks and has no access to tasks of other users.
+
+3 Mark Tasks as Complete or Incomplete:
+
+    Create an endpoint to allow users to mark tasks as complete or incomplete.
+    Ensure that once a task is marked as complete, it cannot be edited unless reverted to incomplete.
+    Add a timestamp for when a task is marked as complete.
+
+4 Task Filters and Sorting:
+
+    Create an endpoint to list tasks with optional filters for Status (Pending or Completed), Priority, and Due Date.
+    Allow tasks to be sorted by Due Date or Priority Level

@@ -1,0 +1,21 @@
+{% extends 'main/base.html' %}
+{% block content %}
+<div class="max-w-lg mx-auto bg-white p-8 rounded-md shadow-lg border-2 border-cyan-950">
+    <h1 class="text-xl text-cyan-950 font-semibold text-center">Sign In</h1>
+    
+    <form class="px-4 mt-4 space-y-2" method="post" action=".">
+        {% csrf_token %}
+        <div>
+            <label class="text-cyan-950 font-medium">Email</label><br/>
+            <input name="email" type="email" class="w-full p-4 bg-gray-200 rounded-md mt-2"><input/>
+        </div>
+        <div>
+            <label class="text-cyan-950 font-medium">Password</label><br/>
+            <input name="password" type="password" class="w-full p-4 bg-gray-200 rounded-md mt-2"><input/>
+        </div>
+        <div>
+            <button class="bg-cyan-950 text-center text-white rounded-md p-4 w-full mt-2">Sign In</button>
+        </div>
+    </form>
+</div>
+{% endblock %}
