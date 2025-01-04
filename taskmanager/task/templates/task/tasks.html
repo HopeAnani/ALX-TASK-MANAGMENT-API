@@ -2,15 +2,55 @@
 
 {% block content %}
 <h1 class="text-3xl m-4 font-serif font-bold text-cyan-950">Tasks</h1>
-<a href="{% url 'task:add' %}"></a><button class="bg-cyan-950 text-center text-white rounded-md p-4 w-36 inline-block mt-2">Add Task</button></a>
+<a href="{% url 'task:add' %}">
+    <button class="bg-cyan-950 text-center text-white rounded-md p-4 w-36 inline-block mt-2">Add Task</button>
+</a>
+
+<form method="get" class="mt-4">
+    <div class="flex space-x-4">
+        <select name="status" class="p-2 rounded-md bg-gray-200">
+            <option value="">All Statuses</option>
+            <option value="pending" {% if request.GET.status == "pending" %}selected{% endif %}>Pending</option>
+            <option value="completed" {% if request.GET.status == "completed" %}selected{% endif %}>Completed</option>
+        </select>
+        <select name="priority" class="p-2 rounded-md bg-gray-200">
+            <option value="">All Priorities</option>
+            <option value="low" {% if request.GET.priority == "low" %}selected{% endif %}>Low</option>
+            <option value="medium" {% if request.GET.priority == "medium" %}selected{% endif %}>Medium</option>
+            <option value="high" {% if request.GET.priority == "high" %}selected{% endif %}>High</option>
+        </select>
+        <select name="sort_by" class="p-2 rounded-md bg-gray-200">
+            <option value="">Default Sort</option>
+            <option value="due_date" {% if request.GET.sort_by == "due_date" %}selected{% endif %}>Due Date</option>
+            <option value="priority" {% if request.GET.sort_by == "priority" %}selected{% endif %}>Priority</option>
+        </select>
+        <button class="bg-cyan-950 text-center text-white rounded-md p-2">Filter</button>
+    </div>
+</form>
+
 <div class="mt-6 grid grid-cols-4 gap-4">
     {% for task in tasks %}
         <div class="p-4 bg-white rounded-md shadow-lg">
-            <h2 class="text-cyan-950 text-lg font-semibold mb-4">{{ task.name }}</h2>
-            <p class="text-base text-[#1e1e1e]">{{ task.description }}</p>
-
+            <a href="{% url 'task:task' task.id %}">
+                <h2 class="text-cyan-950 text-lg font-semibold mb-4">{{ task.name }}</h2>
+                <p class="text-base text-[#1e1e1e]">{{ task.description }}</p>
+            </a>
+            <div class="flex flex-row mt-2 justify-between">
+                <div class="text-center text-white text-xs rounded-md w-16 p-2 
+                    {% if task.priority == 'high' %} bg-red-600
+                    {% elif task.priority == 'medium' %} bg-yellow-400
+                    {% else %} bg-green-500
+                    {% endif %}">
+                    {{ task.priority|capfirst }}
+                </div>
+                <div class="text-xs w-auto p-2">
+                    Status - 
+                    <span class="{% if task.status == 'completed' %}text-green-600{% else %}text-red-600{% endif %}">
+                        {{ task.status|capfirst }}
+                    </span>
+                </div>                
+            </div>
         </div>
     {% endfor %}
-   
 </div>
 {% endblock %}

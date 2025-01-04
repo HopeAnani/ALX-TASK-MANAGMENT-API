@@ -1,0 +1,40 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+<h1 class="text-3xl m-4 font-serif font-bold text-cyan-950">Edit Task</h1>
+<form class="p-8 mt-4 space-y-2 bg-white shadow-lg rounded-md" method="post" action=".">
+    {% csrf_token %}
+    <div>
+        <label class="text-cyan-950 font-medium">Title</label><br/>
+        <input name="name" type="text" value="{{ task.name }}" class="w-full p-4 bg-gray-200 rounded-md mt-2">
+    </div>
+    <div>
+        <label class="text-cyan-950 font-medium">Description</label><br/>
+        <textarea name="description" type="text" class="w-full p-4 bg-gray-200 rounded-md mt-2">{{ task.description }}</textarea>
+    </div>
+    <div>
+        <label class="text-cyan-950 font-medium">Priority</label><br/>
+        <div class="flex space-x-8 mt-2 mb-6">
+            <label class="flex items-center">
+                <input name="priority" type="radio" value="low" class="mr-2" 
+                    {% if task.priority == 'low' %}checked{% endif %}>
+                Low
+            </label>
+            <label class="flex items-center">
+                <input name="priority" type="radio" value="medium" class="mr-2" 
+                    {% if task.priority == 'medium' %}checked{% endif %}>
+                Medium
+            </label>
+            <label class="flex items-center">
+                <input name="priority" type="radio" value="high" class="mr-2" 
+                    {% if task.priority == 'high' %}checked{% endif %}>
+                High
+            </label>
+        </div>
+    </div>
+    <div>
+        <button class="bg-cyan-950 text-center text-white rounded-md p-4 w-full mt-2">Submit</button>
+    </div>
+</form>
+
+{% endblock %}

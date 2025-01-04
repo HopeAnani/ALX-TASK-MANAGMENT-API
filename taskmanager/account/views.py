@@ -1,4 +1,5 @@
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
+from django.contrib import messages
 from django.shortcuts import render,redirect
 from .models import User
 
@@ -11,10 +12,13 @@ def signin(request):
             user = authenticate(request, email=email, password=password)
             if user is not None:
                 login(request, user)
-                
                 return redirect('/')
+            else:
+                # Add a message for invalid credentials
+                messages.error(request, 'Invalid email or password. Please try again.')
  
     return render(request, 'account/signin.html')
+
 
 def signup(request):
     if request.method == 'POST':
@@ -36,4 +40,9 @@ def signup(request):
         print('Just Form')
         
     return render(request, 'account/signup.html')
+
+
+def signout(request):
+    logout(request)
+    return redirect('/')
 
