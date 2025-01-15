@@ -129,3 +129,14 @@ def complete_task(request, pk):
     
     task.save()
     return redirect('task:task', pk=task.pk)  # Redirect to the task detail page
+
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from .models import Task
+from .serializers import TaskSerializer
+
+class TaskListAPIView(APIView):
+    def get(self, request):
+        tasks = Task.objects.all()  # Fetch all tasks
+        serializer = TaskSerializer(tasks, many=True)  # Serialize the data
+        return Response(serializer.data)  # Return serialized data as JSON
