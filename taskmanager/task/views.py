@@ -43,7 +43,7 @@ def add_task(request):
         name = request.POST.get('name')
         description = request.POST.get('description')
         priority = request.POST.get('priority')
-        due_date_str = request.POST.get('due_date')
+        due_date_str = request.POST.get('due_date').strip()
 
         try:
             # Parse and validate the due date
@@ -130,13 +130,32 @@ def complete_task(request, pk):
     task.save()
     return redirect('task:task', pk=task.pk)  # Redirect to the task detail page
 
+# tasks/views.py
+from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from .models import Task
 from .serializers import TaskSerializer
 
-class TaskListAPIView(APIView):
+class TaskListCreateAPIView(APIView):
     def get(self, request):
-        tasks = Task.objects.all()  # Fetch all tasks
-        serializer = TaskSerializer(tasks, many=True)  # Serialize the data
-        return Response(serializer.data)  # Return serialized data as JSON
+        # Retrieve all tasks from the database
+        tasks = Task.objects.all()
+        
+        # Serialize the task data
+        serializer = TaskSerializer(tasks, many=True)
+        
+        # Return the serialized task data as a response
+        return Response(serializer.data)
+
+    def post(self, request):
+        # Create a new task with the data from the request
+        serializer = TaskSerializer(data=request.data)
+        
+        # Check if the data is valid
+        if serializer.is_valid():
+            # Save the new task to the database
+            serializer.save()
+            # Return a response with the newly created task data
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

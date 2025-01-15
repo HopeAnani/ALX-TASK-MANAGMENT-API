@@ -22,7 +22,7 @@ class Task(models.Model):
     created_by = models.ForeignKey(User, related_name='tasks', on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True) 
     completed_at = models.DateTimeField(null=True, blank=True)  
-    due_date = models.DateField()
-
+    due_date = models.DateField(null=True, blank=True)
+ 
     def __str__(self):
         return self.name

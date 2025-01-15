@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'account',
     'main',
     'task',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
